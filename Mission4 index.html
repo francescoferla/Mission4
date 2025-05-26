@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <h1>MISSIONE 4 </h1>
+  <style>
+    body {
+      background-color: black;
+      color: red;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2em;
+      animation: blink 1.5s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .container {
+      background-color: #111;
+      border: 2px solid red;
+      padding: 20px;
+      max-width: 600px;
+      width: 100%;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      font-size: 1em;
+      background-color: black;
+      color: red;
+      border: 1px solid red;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: red;
+      color: black;
+      border: none;
+      cursor: pointer;
+    }
+    #feedback {
+      margin-top: 15px;
+      font-size: 1.2em;
+    }
+    #countdown {
+      color: yellow;
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <audio src="https://cdn.pixabay.com/download/audio/2023/03/01/audio_83fe4d12fa.mp3?filename=spy-mission-111265.mp3" autoplay loop></audio>
+  <h1>🔐 MISSIONE 4 </h1>
+  <div class="container" id="enigmaBox">
+    <p>
+      Questo regalo è in un luogo inaspettato,<br>
+      a cui Fra è molto affezionato,<br>
+      nonostante le risate e le numerose canzoni cantate,<br>
+      quando sono in questo luogo devo sempre ricordarmi di essere cauto.<br>
+      <strong>Il regalo quindi si trova in...</strong>
+    </p>
+    <input type="text" id="answer" placeholder="Inserisci la tua risposta...">
+    <div id="feedback"></div>
+    <div id="countdown"></div>
+  </div>
+
+  <script>
+    const correctAnswer = "AUTO";
+    const input = document.getElementById("answer");
+    const feedback = document.getElementById("feedback");
+    const countdown = document.getElementById("countdown");
+    const enigmaBox = document.getElementById("enigmaBox");
+
+    input.addEventListener("input", () => {
+      const userAnswer = input.value.trim().toUpperCase();
+      if (userAnswer === correctAnswer) {
+        feedback.textContent = "✅ Accesso confermato. Il regalo è nell’auto!";
+        feedback.style.color = "lime";
+        startCountdown(15);
+      } else {
+        feedback.textContent = "❌ Accesso negato.";
+        feedback.style.color = "red";
+        countdown.textContent = "";
+      }
+    });
+
+    function startCountdown(seconds) {
+      let remaining = seconds;
+      countdown.textContent = `Il messaggio si autodistruggerà tra ${remaining} secondi...`;
+      const timer = setInterval(() => {
+        remaining--;
+        if (remaining > 0) {
+          countdown.textContent = `Il messaggio si autodistruggerà tra ${remaining} secondi...`;
+        } else {
+          clearInterval(timer);
+          enigmaBox.remove();
+          document.body.innerHTML += "<h2 style='color:lime;'>✅ Missione completata. Vai a cercare il regalo!</h2>";
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
